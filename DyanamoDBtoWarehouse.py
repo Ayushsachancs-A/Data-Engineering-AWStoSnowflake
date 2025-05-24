@@ -26,13 +26,13 @@ def lambda_handler(event, context):
 
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         filename = f"{table}_{timestamp}.csv"
-        key = f"snowflake/{filename}"
+        key = f"snowflake/{filename}"//file inside s3 bucket
 
         csv_buffer = StringIO()
         df.to_csv(csv_buffer, index=False)
 
         s3 = boto3.client('s3')
-        bucketName = "de-project-datewdata"
+        bucketName = "de-project-datewdata"//S3 bucket name
 
         try:
             s3.put_object(Bucket=bucketName, Key=key, Body=csv_buffer.getvalue())
